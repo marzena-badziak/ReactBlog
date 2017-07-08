@@ -7,7 +7,8 @@ const initialState = {
     { title: "title5", timestamp: 5, content: "dfcpxj" },
     { title: "title6", timestamp: 6, content: "blablabla" },
     { title: "siedem", timestamp: 7, content: "blablabla" }
-  ]
+  ],
+  postToShowId: ""
 };
 
 const posts = (state = initialState, action) => {
@@ -19,6 +20,8 @@ const posts = (state = initialState, action) => {
       };
     case "REMOVE_POST":
       return { ...state, postsCollection: action.posts };
+    case "SHOW_POST_DETAILS":
+      return { ...state, postToShowId: action.postToShowId };
     default:
       return state;
   }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Router, Route, IndexRoute, Link, hashHistory } from "react-router";
-import styled from "styled-components";
+// import styled from "styled-components";
 import PostForm from "./posts/PostForm.js";
 import PostsPage from "./posts/PostsPage.js";
 import PostsDetails from "./posts/PostsDetails.js";
@@ -8,11 +8,10 @@ import LoginPage from "./LoginPage.js";
 import Layout from "./Layout.js";
 import Home from "./Home.js";
 
-// import PropTypes from 'prop-types';
-// import './App.css';
-
 class App extends Component {
   render() {
+// import PropTypes from 'prop-types';
+// import './App.css';
     return (
       <div
         className="App"
@@ -30,6 +29,8 @@ class App extends Component {
             <Route path="posts-details" component={PostsDetails} />
             <Route path="posts" component={PostsPage} />
           </Route>
+          {/* <Route path="login" component={LoginPage} /> */}
+
         </Router>
       </div>
     );

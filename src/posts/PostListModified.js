@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Post from "./Post.js";
+// import Post from "./Post.js";
 import PostList from "./PostList.js";
-import styled from "styled-components";
+// import styled from "styled-components";
 
 export class PostListModified extends Component {
   render() {
@@ -19,9 +19,4 @@ export class PostListModified extends Component {
   }
 }
 
-const StyledPost = styled.div`
-  border: 1px dotted red;
-  margin: 10px;
-  padding: 5px;
-`;
 export default PostListModified;
