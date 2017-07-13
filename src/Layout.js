@@ -3,7 +3,6 @@ import { Link } from "react-router";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Button from "./user-interface/Button";
-import store from "./store.js";
 
 // import store from "./store.js";
 // import LoginPage from "./LoginPage.js";
@@ -17,10 +16,8 @@ export class Layout extends Component {
 
     console.log("logout clicked");
     this.props.router.push("/");
-
   };
   render() {
-
     return (
       <div>
         <NavStyle className="nav nav-tabs">
@@ -32,9 +29,9 @@ export class Layout extends Component {
               <Link to="/login">Login</Link>
             </li>
           </ul>
-            {this.props.email !== "" ? (
-                <ul className="nav navbar-nav">
-                  <li>
+          {this.props.email !== ""
+            ? <ul className="nav navbar-nav">
+                <li>
                   <Link to="/posts">Posts</Link>
                 </li>
                 {/* <li>
@@ -44,7 +41,6 @@ export class Layout extends Component {
                   <Link to="/post-form">Add post</Link>
                 </li>
               </ul>
-              )
             : null}
           <CounterStyle>
             Counter:

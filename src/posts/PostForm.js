@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
+import apiClient from "../lib/api-client";
 
 class PostForm extends Component {
   constructor(props) {
@@ -31,12 +32,29 @@ class PostForm extends Component {
     });
   };
   addPost = post => {
-    const date = new Date().toString();
-    this.props.dispatch({
-      type: "ADD_POST",
-      post: { ...post, timestamp: date }
-    });
-    this.props.router.push("posts");
+    apiClient
+      .post(
+        "/example/api/v1/posts",
+        {
+          post: {
+            title: post.title,
+            body: post.content,
+            user_id: this.props.session.user_id
+          }
+        },
+        {
+          headers: {
+            "X-User-Email": this.props.session.email,
+            "X-User-Token": this.props.session.token
+          }
+        }
+      )
+      .then(response => {
+        this.props.router.push("posts");
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
     // console.log(this.state.posts)
   };
@@ -75,7 +93,7 @@ class PostForm extends Component {
 }
 
 const mapStateToProps = state => {
-  return { posts: state.posts };
+  return { posts: state.posts, session: state.session };
 };
 
 export default connect(mapStateToProps)(withRouter(PostForm));

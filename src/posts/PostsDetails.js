@@ -2,15 +2,39 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import Button from "../user-interface/Button";
+import apiClient from "../lib/api-client.js";
 
 class PostsDetails extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      post: {}
+    };
+  }
   goBack = e => {
-    console.log("go back clicked");
     this.props.router.push("posts");
+  };
+  componentDidMount() {
+    // console.log("inside componentDidMount");
+    // console.log(this.props);
+    apiClient
+      .get("/example/api/v1/posts/" + this.props.params.id)
+      .then(response => {
+        this.setState({
+          title: response.data.title,
+          content: response.data.body,
+          post: response.data
+        });
+        // console.log(response);
+        console.log(response.data.title);
+      })
+      .catch(err => {});
   }
   render() {
-    console.log("postsdetails render");
-    console.log(this.props.postToShow);
+    // console.log(this.state.post);
+    // console.log("inside PostsDetails render");
+    // console.log(this.state);
+    // console.log(this.props.postToShow);
     // console.log("selected post id: " + this.props.posts.postToShowId);
 
     return (
@@ -21,25 +45,28 @@ class PostsDetails extends Component {
           <b>Title:</b>
         </div>
         <div>
-          {this.props.postToShow.title}
+          {this.state.title}
         </div>
         <br />
         <div>
           <b>Content:</b>
         </div>
         <div>
-          {this.props.postToShow.content}
+          {this.state.content}
         </div>
         <br />
         <div>
-          <b>timestamp:</b>
+          <b>id:</b>
         </div>
         <div>
-          {this.props.postToShow.timestamp}
+          {this.state.id}
         </div>
         <br />
-        <Button className="btn btn-default btn-xs" onClick={this.goBack} label="go back">
-        </Button>
+        <Button
+          className="btn btn-default btn-xs"
+          onClick={this.goBack}
+          label="go back"
+        />
       </StyledPostDetails>
     );
   }
@@ -52,7 +79,6 @@ const StyledPostDetails = styled.div`
 `;
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     postToShow: state.posts.postsCollection.find(p => {
       return p.timestamp === state.posts.postToShowId;

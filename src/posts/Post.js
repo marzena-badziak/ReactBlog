@@ -5,20 +5,21 @@ import Button from "../user-interface/Button.js";
 
 class Post extends Component {
   remove = e => {
-    this.props.onRemove(this.props.timestamp);
-    console.log("remove me!!!");
+    // console.log("remover - function in Post");
+    this.props.onRemove(this.props.id);
   };
-  onHover = e => {};
+  // onHover = e => {};
 
   show = event => {
-    console.log("show post");
     // console.log(event);
     this.props.dispatch({
       type: "SHOW_POST_DETAILS",
-      postToShowId: this.props.timestamp
+      postToShowId: this.props.id
+      // postToShowId: this.props.timestamp
     });
     // console.log(this.props.timestamp);
-    this.props.router.push("posts-details");
+    // console.log(event);
+    this.props.router.push("posts-details/" + this.props.id);
   };
 
   render() {
@@ -28,10 +29,10 @@ class Post extends Component {
           <b>title:</b> {this.props.title}
         </p>
         <p>
-          <b>timestamp:</b> {this.props.timestamp}
+          <b>id:</b> {this.props.id}
         </p>
         <p>
-          <b>Content:</b> {this.props.content}
+          <b>Content:</b> {this.props.body}
         </p>
         <Button
           className="btn btn-danger btn-xs"

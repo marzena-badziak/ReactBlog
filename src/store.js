@@ -1,5 +1,6 @@
-import { createStore, combineReducers, compose } from "redux";
+import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import persistState from "redux-localstorage";
+import thunk from "redux-thunk";
 // import { connect } from "react-redux";
 import session from "./posts/session-reducer";
 import counter from "./posts/counter-reducer";
@@ -11,7 +12,7 @@ const rootReducer = combineReducers({
   session: session
 });
 
-const enhancer = compose(persistState("session"));
+const enhancer = compose(applyMiddleware(thunk), persistState("session"));
 
 const store = createStore(rootReducer, {}, enhancer);
 

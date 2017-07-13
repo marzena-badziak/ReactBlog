@@ -1,17 +1,19 @@
 import React, { Component } from "react";
-import axios from "axios";
+import apiClient from "./lib/api-client";
 import { connect } from "react-redux";
 // import styled from "styled-components";
 import Button from "./user-interface/Button.js";
-import store from "./store.js";
+// import store from "./store.js";
 import LoginForm from "./LoginForm";
+import { logIn } from "./session-actions.js";
 
 export class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      token: ""
     };
   }
 
@@ -28,26 +30,12 @@ export class LoginPage extends Component {
 
   login = e => {
     e.preventDefault();
-    axios
-      .post("https://praktyki-react.herokuapp.com/api/v1/sessions", {
-        user: { email: this.state.email, password: this.state.password }
+    this.props.dispatch(
+      logIn({
+        email: this.state.email,
+        password: this.state.password
       })
-      .then(response => {
-        console.log(response);
-        this.props.dispatch({
-          type: "LOGIN",
-          email: response.data.data.email,
-          token: response.data.data.auth_token
-        });
-        console.log(response);
-        this.props.router.push("posts");
-
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    console.log("login clicked");
-    console.log(this.state.email);
+    );
   };
 
   render() {

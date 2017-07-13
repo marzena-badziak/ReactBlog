@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 class PostList extends Component {
   render() {
-    // console.log(this.props.posts);
     return (
       <div
         className={this.props.className}
@@ -15,12 +14,13 @@ class PostList extends Component {
         }}
       >
         {this.props.posts.map(p =>
-          <StyledPost key={p.timestamp}>
+          <StyledPost key={p.id}>
             <Post
+              // key={p.id}
               onRemove={this.props.onRemove}
               title={p.title}
-              timestamp={p.timestamp}
-              content={p.content}
+              id={p.id}
+              body={p.body}
             />
           </StyledPost>
         )}

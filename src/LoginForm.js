@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
-import axios from "axios";
-
+import apiClient from "./lib/api-client";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -13,13 +12,11 @@ class LoginForm extends Component {
     };
   }
   registerEmail = event => {
-    console.log("email typed!");
     this.setState({
       registerEmail: event.target.value
     });
   };
   registerPassword = event => {
-    console.log("password typed!");
     console.log(this.state.registerPassword);
     this.setState({
       registerPassword: event.target.value
@@ -27,9 +24,13 @@ class LoginForm extends Component {
   };
   registerNewUser = e => {
     e.preventDefault();
-    axios.post("https://praktyki-react.herokuapp.com/api/v1/registrations", {
-      user: { email: this.state.registerEmail , password: this.state.registerPassword}
-    })
+    apiClient
+      .post("/api/v1/registrations", {
+        user: {
+          email: this.state.registerEmail,
+          password: this.state.registerPassword
+        }
+      })
       .then(response => {
         this.props.dispatch({
           type: "REGISTER_NEW_USER",
@@ -37,7 +38,7 @@ class LoginForm extends Component {
           email: response.data.email
         });
         console.log(response);
-        console.log(response.data.email);
+        // console.log(response.data.email);
         this.setState({
           status: response.statusText,
           newUser: response.data.email
@@ -46,8 +47,7 @@ class LoginForm extends Component {
       .catch(err => {
         console.dir(err);
       });
-    console.log("register user clicked");
-    console.log(this.state.email);
+    // console.log(this.state.email);
   };
 
   render() {
@@ -74,7 +74,6 @@ class LoginForm extends Component {
           />
         </div>
         <br />
-
         <button className="btn btn-success" onClick={this.registerNewUser}>
           register user
         </button>

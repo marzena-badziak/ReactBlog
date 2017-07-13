@@ -1,13 +1,5 @@
 const initialState = {
-  postsCollection: [
-    { title: "jeden", timestamp: 1, content: "fdjojo" },
-    { title: "dwa", timestamp: 2, content: "blablabla" },
-    { title: "trzy", timestamp: 3, content: "fjpsdfd" },
-    { title: "cztery", timestamp: 4, content: "blablabla" },
-    { title: "title5", timestamp: 5, content: "dfcpxj" },
-    { title: "title6", timestamp: 6, content: "blablabla" },
-    { title: "siedem", timestamp: 7, content: "blablabla" }
-  ],
+  postsCollection: [],
   postToShowId: ""
 };
 
@@ -22,6 +14,8 @@ const posts = (state = initialState, action) => {
       return { ...state, postsCollection: action.posts };
     case "SHOW_POST_DETAILS":
       return { ...state, postToShowId: action.postToShowId };
+    case "FETCH_POSTS":
+      return { ...state, postsCollection: action.getPosts };
     default:
       return state;
   }
